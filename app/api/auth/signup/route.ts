@@ -1,10 +1,10 @@
 import { sendEmail } from "@/action/email/SendEmail";
-import sendOtpModels from "@/models/send-otp.models";
 import User from "@/models/users.models";
 import { connectDB } from "@/utils/db";
 import { SignUpEmailTemplate } from "@/utils/EmailTemplate/auth";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import sendOtpModels from "@/models/send-otp.models";
 
 export async function POST(request: NextRequest) {
   await connectDB();
