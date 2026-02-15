@@ -4,7 +4,7 @@ import User from "@/models/users.models";
 import { connectDB } from "@/utils/db";
 import { SignUpEmailTemplate } from "@/utils/EmailTemplate/auth";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export async function POST(request: NextRequest) {
   await connectDB();
