@@ -1,4 +1,4 @@
-# Blog Website
+# Blog Website 
 
 Welcome to the Blog Website! This platform allows users to read, create, and share blogs across various topics. The website is built with **Next.js** and includes features like user authentication, blog creation, and a rich-text editor for seamless writing experiences.
 
