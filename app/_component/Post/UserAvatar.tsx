@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle } from '@/lib/icons';
 import { CldImage } from 'next-cloudinary';
 import { cleanMarkdown, isValidUrl } from '@/lib/common-function';
 import { UserType } from '@/types/blogs-types';

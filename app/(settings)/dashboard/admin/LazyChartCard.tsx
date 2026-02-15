@@ -1,18 +1,18 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Line, LineChart, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Loader2 } from 'lucide-react';
 
 interface LazyChartCardProps {
     title: string;
     description?: string;
-    Chart: React.ComponentType<any>;
+    // Chart prop removed as it's hardcoded to LineChart logic
     data: any[];
     config: { [key: string]: { color: string } };
 }
 
-const LazyChartCard: React.FC<LazyChartCardProps> = ({ title, description, Chart, data, config }) => {
+const LazyChartCard: React.FC<LazyChartCardProps> = ({ title, description, data, config }) => {
     const [ref, inView] = useInView({
         triggerOnce: true,
         rootMargin: '200px 0px',
@@ -28,7 +28,7 @@ const LazyChartCard: React.FC<LazyChartCardProps> = ({ title, description, Chart
                 {inView ? (
                     <div className="h-[300px]">
                         <ResponsiveContainer width="100%" height="100%">
-                            <Chart data={data}>
+                            <LineChart data={data}>
                                 <XAxis dataKey="date" />
                                 <YAxis />
                                 <Tooltip />
@@ -41,7 +41,7 @@ const LazyChartCard: React.FC<LazyChartCardProps> = ({ title, description, Chart
                                         stroke={config[key].color}
                                     />
                                 ))}
-                            </Chart>
+                            </LineChart>
                         </ResponsiveContainer>
                     </div>
                 ) : (

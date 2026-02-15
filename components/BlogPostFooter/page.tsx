@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Heart, Eye, Share2 } from 'lucide-react';
 import { HeartFilledIcon } from '@radix-ui/react-icons';
-import { SiWhatsapp, SiFacebook, SiX, SiLinkedin } from 'react-icons/si';
+import { SiWhatsapp, SiFacebook, SiX, SiLinkedin } from '@/lib/icons';
 import { toast } from 'react-hot-toast';
 import {
   DropdownMenu,

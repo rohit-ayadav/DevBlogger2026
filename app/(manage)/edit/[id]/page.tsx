@@ -69,7 +69,13 @@ async function getBlogData(id: string): Promise<EditBlogState> {
     }
 }
 
+// import { BUILD_CONFIG } from "@/utils/build-config";
+
 // export async function generateStaticParams() {
+//     if (!BUILD_CONFIG.GENERATE_STATIC_PAGES) {
+//         return [];
+//     }
+
 //     await connectDB();
 //     const posts = await Blog.find({}, { slug: 1, _id: 1 });
 

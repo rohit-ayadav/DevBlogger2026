@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Author } from './ProfileNew'
 import { Share2 } from 'lucide-react'
-import { SiFacebook, SiLinkedin } from 'react-icons/si'
+import { SiFacebook, SiLinkedin } from '@/lib/icons'
 import { Twitter } from 'react-feather'
 
 const ShareCTA = ({ author, copyProfileLink }: { author: Author; copyProfileLink: () => void }) => {

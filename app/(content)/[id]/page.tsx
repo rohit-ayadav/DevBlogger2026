@@ -48,7 +48,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 // getStaticPaths
+// import { BUILD_CONFIG } from "@/utils/build-config";
+
 // export async function generateStaticParams() {
+//     if (!BUILD_CONFIG.GENERATE_STATIC_PAGES) {
+//         return [];
+//     }
+
 //     const contentDir = path.join(process.cwd(), 'content');
 //     const files = await fs.readdir(contentDir);
 //     const paths = files.map((file) => ({

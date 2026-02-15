@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -16,8 +15,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import toast from 'react-hot-toast'
+import dynamic from 'next/dynamic'
+import { Loader2 } from 'lucide-react'
+
+const SubscriberGrowthChart = dynamic(() => import('./NewsletterCharts').then(mod => mod.SubscriberGrowthChart), {
+    loading: () => <div className="h-[200px] w-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+})
+
+const EngagementRateChart = dynamic(() => import('./NewsletterCharts').then(mod => mod.EngagementRateChart), {
+    loading: () => <div className="h-[200px] w-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+})
 
 interface Subscriber {
     email: string;
@@ -135,24 +145,7 @@ export default function NewsletterAdminPage({ subscribers }: NewsletterAdminPage
                                 <CardTitle>Subscriber Growth</CardTitle>
                             </CardHeader>
                             <CardContent className="pl-2">
-                                <ChartContainer
-                                    config={{
-                                        subscribers: {
-                                            label: "Subscribers",
-                                            color: "hsl(var(--chart-1))",
-                                        },
-                                    }}
-                                    className="h-[200px]"
-                                >
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={subscriberGrowth}>
-                                            <XAxis dataKey="month" />
-                                            <YAxis />
-                                            <ChartTooltip content={<ChartTooltipContent />} />
-                                            <Line type="monotone" dataKey="subscribers" stroke="var(--color-subscribers)" strokeWidth={2} />
-                                        </LineChart>
-                                    </ResponsiveContainer>
-                                </ChartContainer>
+                                <SubscriberGrowthChart data={subscriberGrowth} />
                             </CardContent>
                         </Card>
                         <Card className="col-span-7 lg:col-span-3">
@@ -160,24 +153,7 @@ export default function NewsletterAdminPage({ subscribers }: NewsletterAdminPage
                                 <CardTitle>Engagement Rate</CardTitle>
                             </CardHeader>
                             <CardContent className="pl-2">
-                                <ChartContainer
-                                    config={{
-                                        rate: {
-                                            label: "Engagement Rate",
-                                            color: "hsl(var(--chart-2))",
-                                        },
-                                    }}
-                                    className="h-[200px]"
-                                >
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart data={engagementRate}>
-                                            <XAxis dataKey="week" />
-                                            <YAxis />
-                                            <ChartTooltip content={<ChartTooltipContent />} />
-                                            <Bar dataKey="rate" fill="var(--color-rate)" />
-                                        </BarChart>
-                                    </ResponsiveContainer>
-                                </ChartContainer>
+                                <EngagementRateChart data={engagementRate} />
                             </CardContent>
                         </Card>
                     </div>

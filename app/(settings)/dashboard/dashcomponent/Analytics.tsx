@@ -1,8 +1,14 @@
 import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Badge } from '@/components/ui/badge'
 import { BlogPostType } from '@/types/blogs-types'
+import dynamic from 'next/dynamic'
+import { Loader2 } from 'lucide-react'
+
+const AnalyticsChart = dynamic(() => import('./AnalyticsChart'), {
+    loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+})
 
 interface AnalyticsProps {
     blogs: BlogPostType[];
@@ -23,36 +29,7 @@ const Analytics = ({ blogs, monthlyStats, chartData, sortedBlogs }: AnalyticsPro
                 </CardHeader>
                 <CardContent className="px-2 sm:px-6">
                     <div className="h-64 sm:h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={chartData} margin={{ top: 5, right: 30, left: 10, bottom: 20 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis
-                                    dataKey="displayMonth"
-                                    tick={{ fontSize: 12 }}
-                                    angle={-45}
-                                    textAnchor="end"
-                                    height={50}
-                                />
-                                <YAxis
-                                    yAxisId="left"
-                                    orientation="left"
-                                    stroke="#0088FE"
-                                    tick={{ fontSize: 12 }}
-                                    width={40}
-                                />
-                                <YAxis
-                                    yAxisId="right"
-                                    orientation="right"
-                                    stroke="#00C49F"
-                                    tick={{ fontSize: 12 }}
-                                    width={40}
-                                />
-                                <Tooltip />
-                                <Legend wrapperStyle={{ fontSize: 12, marginTop: 10 }} />
-                                <Bar yAxisId="left" dataKey="views" fill="#0088FE" name="Views" />
-                                <Bar yAxisId="right" dataKey="likes" fill="#00C49F" name="Likes" />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <AnalyticsChart data={chartData} />
                     </div>
                 </CardContent>
             </Card>
@@ -106,8 +83,8 @@ const Analytics = ({ blogs, monthlyStats, chartData, sortedBlogs }: AnalyticsPro
                                             </td>
                                             <td className="px-3 sm:px-6 py-2 sm:py-4">
                                                 <div className={`text-xs sm:text-sm ${Number(engagement) > 5 ? 'text-green-600 dark:text-green-400' :
-                                                        Number(engagement) > 2 ? 'text-amber-600 dark:text-amber-400' :
-                                                            'text-red-600 dark:text-red-400'
+                                                    Number(engagement) > 2 ? 'text-amber-600 dark:text-amber-400' :
+                                                        'text-red-600 dark:text-red-400'
                                                     }`}>
                                                     {engagement}%
                                                 </div>

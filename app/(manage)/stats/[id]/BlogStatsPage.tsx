@@ -1,8 +1,8 @@
 "use client";
 import React, { useMemo, useState } from 'react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import dynamic from 'next/dynamic';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, ThumbsUp, Calendar, Eye, Edit, Trash2, ExternalLink, Download, Filter } from 'lucide-react';
+import { Users, ThumbsUp, Calendar, Eye, Edit, Trash2, ExternalLink, Download, Filter, Loader2 } from 'lucide-react';
 import { formatDate } from '@/utils/date-formatter';
 import { BlogPostType, MonthlyStatsType, UserType } from '@/types/blogs-types';
 import { useTheme } from '@/context/ThemeContext';
@@ -14,6 +14,21 @@ import { AuthorCard, StatCard, TIME_PERIODS } from './Card';
 import { ErrorMessage } from '@/lib/ErrorMessage';
 import { useSession } from 'next-auth/react';
 import BlogDetails from './BlogDetails';
+
+const ViewsTrendChart = dynamic(() => import('./StatsCharts').then(mod => mod.ViewsTrendChart), {
+    loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+});
+
+const LikesTrendChart = dynamic(() => import('./StatsCharts').then(mod => mod.LikesTrendChart), {
+    loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+});
+
+const EngagementBarChart = dynamic(() => import('./StatsCharts').then(mod => mod.EngagementBarChart), {
+    loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+});
 
 const BlogStatsPage = ({ user, data, monthlyStats }: { user: UserType, data: BlogPostType, monthlyStats: MonthlyStatsType[] }) => {
     const { isDarkMode } = useTheme();
@@ -238,27 +253,7 @@ const BlogStatsPage = ({ user, data, monthlyStats }: { user: UserType, data: Blo
                     <CardTitle>Views Trend</CardTitle>
                 </CardHeader>
                 <div className="h-72">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={processedStats}>
-                            <defs>
-                                <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.2} />
-                                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="month" />
-                            <YAxis />
-                            <Tooltip />
-                            <Area
-                                type="monotone"
-                                dataKey="views"
-                                stroke="#3B82F6"
-                                fillOpacity={1}
-                                fill="url(#viewsGradient)"
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    <ViewsTrendChart data={processedStats} />
                 </div>
             </Card>
 
@@ -270,20 +265,7 @@ const BlogStatsPage = ({ user, data, monthlyStats }: { user: UserType, data: Blo
                         <CardTitle>Likes Over Time</CardTitle>
                     </CardHeader>
                     <div className="h-72">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={processedStats}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="month" />
-                                <YAxis />
-                                <Tooltip />
-                                <Line
-                                    type="monotone"
-                                    dataKey="likes"
-                                    stroke="#10B981"
-                                    strokeWidth={2}
-                                />
-                            </LineChart>
-                        </ResponsiveContainer>
+                        <LikesTrendChart data={processedStats} />
                     </div>
                 </Card>
 
@@ -293,19 +275,7 @@ const BlogStatsPage = ({ user, data, monthlyStats }: { user: UserType, data: Blo
                         <CardTitle>Monthly Engagement Rate</CardTitle>
                     </CardHeader>
                     <div className="h-72">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={processedStats}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="month" />
-                                <YAxis unit="%" />
-                                <Tooltip />
-                                <Bar
-                                    dataKey="engagement"
-                                    fill="#8B5CF6"
-                                    radius={[4, 4, 0, 0]}
-                                />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <EngagementBarChart data={processedStats} />
                     </div>
                 </Card>
             </div>

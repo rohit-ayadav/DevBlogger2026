@@ -7,6 +7,7 @@ import serializeDocument from "@/utils/date-formatter";
 import { ErrorMessage } from "@/lib/ErrorMessage";
 import { BlogPostType, MonthlyStatsType, UserType } from "@/types/blogs-types";
 import BlogStatsPage from "./BlogStatsPage";
+import { BUILD_CONFIG } from "@/utils/build-config";
 
 async function getPostResults(blogid: string) {
     try {
@@ -63,15 +64,18 @@ async function getPostResults(blogid: string) {
     }
 }
 
-// export async function generateStaticParams() {
-//     await connectDB();
-//     const posts = await Blog.find({}, { slug: 1, _id: 1 });
+export async function generateStaticParams() {
+    if (!BUILD_CONFIG.GENERATE_STATIC_PAGES) {
+        return [];
+    }
+    await connectDB();
+    const posts = await Blog.find({}, { slug: 1, _id: 1 });
 
-//     return posts.flatMap(post => [
-//         { id: post._id.toString() },
-//         { id: post.slug }
-//     ]);
-// }
+    return posts.flatMap(post => [
+        { id: post._id.toString() },
+        { id: post.slug }
+    ]);
+}
 
 export default async function BlogStats({ params }: { params: { id: string } }) {
     const response = await getPostResults(params.id);

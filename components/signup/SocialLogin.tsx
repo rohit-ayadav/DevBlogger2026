@@ -1,7 +1,7 @@
 import { Button } from '../ui/button'
 import { Separator } from '../ui/separator'
 import { signIn } from 'next-auth/react'
-import { FaGithub, FaGoogle } from 'react-icons/fa'
+import { FaGithub, FaGoogle } from '@/lib/icons'
 
 const SocialLogin = ({ isLoading }: { isLoading: boolean }) => {
     return (

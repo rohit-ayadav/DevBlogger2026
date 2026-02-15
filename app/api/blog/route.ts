@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     .replace(/^-+|-+$/g, "");   // Remove leading/trailing hyphens
 
   const { window } = new JSDOM("");
-  const purify = DOMPurify(window);
+  const purify = DOMPurify(window as unknown as any);
   const sanitizedContent = purify.sanitize(content);
   const sanitizedTitle = purify.sanitize(title);
   const sanitizedTags = tags.map((tag: string) => purify.sanitize(tag));

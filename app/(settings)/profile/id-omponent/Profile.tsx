@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo } from 'react';
 import { Moon, Sun, Mail, Globe, ArrowLeft, Search, Twitter } from 'lucide-react';
-import { SiFacebook, SiLinkedin } from 'react-icons/si';
+import { SiFacebook, SiLinkedin } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

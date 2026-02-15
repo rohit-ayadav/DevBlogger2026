@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { FaGithub, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaGithub, FaGoogle, FaEye, FaEyeSlash } from '@/lib/icons';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { findEmailFromUserName } from '@/action/checkUserNameAvailability';

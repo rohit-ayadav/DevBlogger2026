@@ -2,10 +2,15 @@ import React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import LazyChartCard from './LazyChartCard';
+// import LazyChartCard from './LazyChartCard'; // Replaced with dynamic
 import { Post } from './useAdmin';
-import { LineChart } from 'recharts';
 import ShowProfileImage from '@/components/ShowProfileImage';
+import dynamic from 'next/dynamic';
+
+const LazyChartCard = dynamic(() => import('./LazyChartCard'), {
+    loading: () => <div className="h-[300px] w-full bg-gray-100 animate-pulse rounded-lg" />,
+    ssr: false
+});
 
 const Overview = ({ posts }: { posts: Post[] }) => {
     return (
@@ -13,7 +18,6 @@ const Overview = ({ posts }: { posts: Post[] }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <LazyChartCard
                     title="Views Over Time"
-                    Chart={LineChart}
                     data={[
                         { date: "Jan", views: 100 },
                         { date: "Feb", views: 300 },
@@ -64,7 +68,6 @@ const Overview = ({ posts }: { posts: Post[] }) => {
                 <p className="text-sm text-muted-foreground">Manage your posts and categories.</p>
                 <LazyChartCard
                     title="Posts by Category"
-                    Chart={LineChart}
                     data={[
                         { category: "Technology", posts: 50 },
                         { category: "Health", posts: 30 },

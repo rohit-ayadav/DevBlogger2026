@@ -34,9 +34,9 @@ async function getPostData(id: string): Promise<ApiResponse> {
 
         if (!post || Object.keys(post).length === 0 || ['draft', 'archived', 'deleted'].includes(post.status)) {
             return {
-            success: false,
-            statusCode: 404,
-            error: 'Blog post not found'
+                success: false,
+                statusCode: 404,
+                error: 'Blog post not found'
             };
         }
 
@@ -124,7 +124,13 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
+import { BUILD_CONFIG } from "@/utils/build-config";
+
 export async function generateStaticParams() {
+    if (!BUILD_CONFIG.GENERATE_STATIC_PAGES) {
+        return [];
+    }
+
     await connectDB();
     const posts = await Blog.find({}, { slug: 1, _id: 1 });
 

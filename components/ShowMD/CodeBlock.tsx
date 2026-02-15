@@ -1,9 +1,46 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { vs } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+import ts from 'react-syntax-highlighter/dist/esm/languages/hljs/typescript';
+import python from 'react-syntax-highlighter/dist/esm/languages/hljs/python';
+import html from 'react-syntax-highlighter/dist/esm/languages/hljs/xml';
+import css from 'react-syntax-highlighter/dist/esm/languages/hljs/css';
+import json from 'react-syntax-highlighter/dist/esm/languages/hljs/json';
+import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash';
+import markdown from 'react-syntax-highlighter/dist/esm/languages/hljs/markdown';
+import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql';
+import java from 'react-syntax-highlighter/dist/esm/languages/hljs/java';
+import cpp from 'react-syntax-highlighter/dist/esm/languages/hljs/cpp';
+import csharp from 'react-syntax-highlighter/dist/esm/languages/hljs/csharp';
+import go from 'react-syntax-highlighter/dist/esm/languages/hljs/go';
+import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
+import php from 'react-syntax-highlighter/dist/esm/languages/hljs/php';
+import ruby from 'react-syntax-highlighter/dist/esm/languages/hljs/ruby';
+
+SyntaxHighlighter.registerLanguage('javascript', js);
+SyntaxHighlighter.registerLanguage('jsx', js);
+SyntaxHighlighter.registerLanguage('typescript', ts);
+SyntaxHighlighter.registerLanguage('tsx', ts);
+SyntaxHighlighter.registerLanguage('python', python);
+SyntaxHighlighter.registerLanguage('html', html);
+SyntaxHighlighter.registerLanguage('xml', html);
+SyntaxHighlighter.registerLanguage('css', css);
+SyntaxHighlighter.registerLanguage('json', json);
+SyntaxHighlighter.registerLanguage('bash', bash);
+SyntaxHighlighter.registerLanguage('markdown', markdown);
+SyntaxHighlighter.registerLanguage('sql', sql);
+SyntaxHighlighter.registerLanguage('java', java);
+SyntaxHighlighter.registerLanguage('cpp', cpp);
+SyntaxHighlighter.registerLanguage('csharp', csharp);
+SyntaxHighlighter.registerLanguage('go', go);
+SyntaxHighlighter.registerLanguage('rust', rust);
+SyntaxHighlighter.registerLanguage('php', php);
+SyntaxHighlighter.registerLanguage('ruby', ruby);
+
 import { useTheme } from "@/context/ThemeContext";
 
 // Define common file extensions to language mappings
@@ -346,7 +383,7 @@ const CodeBlock = ({ className, children }: { className?: string; children: Reac
 
             <SyntaxHighlighter
                 language={language}
-                style={theme === "dark" ? atomDark : vs}
+                style={theme === "dark" ? atomOneDark : vs}
                 customStyle={{
                     margin: 0,
                     padding: '1rem',

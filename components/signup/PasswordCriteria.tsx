@@ -1,10 +1,10 @@
 // components/auth/SignupForm/PasswordCriteria.tsx
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaTimes } from '@/lib/icons';
 import { PasswordCriteriaType } from './useSignupForm';
 
 const PasswordCriteria = ({ criteria }: { criteria: PasswordCriteriaType }) => {
     const allCriteriaMet = Object.values(criteria).every(c => c);
-  
+
     if (allCriteriaMet) {
         return (
             <div className="flex items-center text-sm">

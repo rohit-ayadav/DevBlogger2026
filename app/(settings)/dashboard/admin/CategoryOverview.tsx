@@ -2,10 +2,15 @@
 
 import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
-import { Tag, Eye, ThumbsUp, TrendingUp } from 'lucide-react'
+
+import { Tag, Eye, ThumbsUp, TrendingUp, Loader2 } from 'lucide-react'
 import { Progress } from "@/components/ui/progress"
+import dynamic from 'next/dynamic'
+
+const CategoryBarChart = dynamic(() => import('./CategoryBarChart'), {
+    loading: () => <div className="h-[400px] w-full flex items-center justify-center"><Loader2 className="animate-spin" /></div>,
+    ssr: false
+})
 
 
 interface CategoryStats {
@@ -38,7 +43,8 @@ const CategoryOverview: React.FC<{ stats: Stats }> = ({ stats }) => {
                         <CardTitle>Category Overview</CardTitle>
                         <CardDescription>Detailed statistics for each category</CardDescription>
                     </CardHeader>
-                    <ChartContainer
+                    <CategoryBarChart
+                        data={stats.categoryStats}
                         config={{
                             count: {
                                 label: "Post Count",
@@ -53,21 +59,7 @@ const CategoryOverview: React.FC<{ stats: Stats }> = ({ stats }) => {
                                 color: "hsl(var(--chart-3))",
                             },
                         }}
-                        className="h-[400px] max-w-full"
-                    >
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={stats.categoryStats}>
-                                <XAxis dataKey="category" />
-                                <YAxis />
-                                <Tooltip content={<ChartTooltipContent />} />
-                                <Legend />
-                                <Bar dataKey="count" fill="var(--color-count)" name="Post Count" />
-                                <Bar dataKey="totalViews" fill="var(--color-views)" name="Total Views" />
-                                <Bar dataKey="totalLikes" fill="var(--color-likes)" name="Total Likes" />
-
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </ChartContainer>
+                    />
                 </Card>
             </div>
 

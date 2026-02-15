@@ -117,9 +117,16 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
+import { BUILD_CONFIG } from "@/utils/build-config";
+
 export async function generateStaticParams() {
+    if (!BUILD_CONFIG.GENERATE_STATIC_PAGES) {
+        return [];
+    }
+
     await connectDB();
-    const posts = await User.find({}, { username: 1, _id: 1 });
+    const activeAuthors = await Blog.distinct('createdBy', { status: 'approved' });
+    const posts = await User.find({ email: { $in: activeAuthors } }, { username: 1, _id: 1 });
 
     return posts.flatMap(post => [
         { id: post._id.toString() },

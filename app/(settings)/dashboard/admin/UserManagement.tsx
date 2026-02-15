@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import dynamic from 'next/dynamic';
+
+const UserGrowthChart = dynamic(() => import('./UserGrowthChart'), {
+    loading: () => <div className="h-[400px] w-full flex items-center justify-center">Loading Chart...</div>,
+    ssr: false
+});
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -282,35 +287,7 @@ const UserManagement: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="h-[400px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={growthData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                <XAxis dataKey="month" stroke="currentColor" />
-                                <YAxis stroke="currentColor" />
-                                <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: 'hsl(var(--background))',
-                                        border: '1px solid hsl(var(--border))'
-                                    }}
-                                />
-                                <Legend />
-                                <Line
-                                    type="monotone"
-                                    dataKey="users"
-                                    name="Total Users"
-                                    stroke="hsl(var(--primary))"
-                                    strokeWidth={2}
-                                    dot={{ r: 4 }}
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="activeUsers"
-                                    name="Active Writers"
-                                    stroke='hsl(0, 0%, 70%)'
-                                    strokeWidth={2}
-                                    dot={{ r: 4 }}
-                                />
-                            </LineChart>
-                        </ResponsiveContainer>
+                        <UserGrowthChart data={growthData} />
                     </div>
                 </CardContent>
             </Card>
