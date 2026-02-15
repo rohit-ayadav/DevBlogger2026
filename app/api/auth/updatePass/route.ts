@@ -5,9 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { rateLimit } from "@/utils/rate-limit";
 import { sendEmail } from "@/action/email/SendEmail";
 
-await connectDB();
-
 export async function PUT(request: NextRequest) {
+  await connectDB();
   const ip =
     request.headers.get("x-real-ip") ||
     request.headers.get("x-forwarded-for") ||

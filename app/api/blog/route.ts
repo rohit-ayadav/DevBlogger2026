@@ -12,7 +12,6 @@ import webpush from "web-push";
 import Notification from "@/models/notification.models";
 import { revalidatePath } from "next/cache";
 
-await connectDB();
 
 webpush.setVapidDetails(
   "mailto:rohitkuyada@gmail.com",
@@ -29,6 +28,7 @@ const blogSchema = Joi.object({
 });
 
 export async function POST(request: NextRequest) {
+  await connectDB();
   const body = await request.json();
   const session = await getSessionAtHome();
 
@@ -119,6 +119,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  await connectDB();
   const searchParams = request.nextUrl.searchParams;
   const id = searchParams.get("id");
   if (!id) { return NextResponse.json({ message: "Blog post id is required", success: false }, { status: 400 }); }
@@ -173,6 +174,7 @@ const projection = {
 };
 
 export async function GET(request: NextRequest) {
+  await connectDB();
   const searchParams = request.nextUrl.searchParams;
   const category = searchParams.get("category")?.split(",");
   const limit = parseInt(searchParams.get("limit") || "5", 10);

@@ -4,10 +4,10 @@ import User from "@/models/users.models";
 import { connectDB } from "@/utils/db";
 import { SignUpEmailTemplate } from "@/utils/EmailTemplate/auth";
 import { NextRequest, NextResponse } from "next/server";
-await connectDB();
 import bcrypt from "bcrypt";
 
 export async function POST(request: NextRequest) {
+  await connectDB();
   const body = await request.json();
   let { name, email, username, password, image, bio, otp } = body;
   if (!username) {
